@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calendar</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid #dddddd;
+      text-align: center;
+      padding: 8px;
+      position: relative;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    .today {
+      background-color: #ffff99; /* Màu vàng nhạt */
+    }
+  </style>
+</head>
+<body>
+
+<h2>Calendar</h2>
+
+<table id="calendar">
+  <tr>
+    <th>Sun</th>
+    <th>Mon</th>
+    <th>Tue</th>
+    <th>Wed</th>
+    <th>Thu</th>
+    <th>Fri</th>
+    <th>Sat</th>
+  </tr>
+</table>
+
+<script>
+  // Lấy ngày hiện tại
+  const today = new Date();
+  const currentMonth = today.getMonth();
+  const currentYear = today.getFullYear();
+
+  // Tạo lịch cho 12 tháng
+  for (let month = 0; month < 12; month++) {
+    const firstDay = new Date(currentYear, month, 1);
+    const lastDay = new Date(currentYear, month + 1, 0);
+    const numDays = lastDay.getDate();
+    
+    const table = document.getElementById("calendar");
+    const row = table.insertRow(-1);
+    row.innerHTML = `<td colspan="7" style="text-align: center; background-color: #f2f2f2;">${firstDay.toLocaleString('default', { month: 'long' })}</td>`;
+
+    let dayOfWeek = firstDay.getDay();
+
+    for (let i = 0; i < dayOfWeek; i++) {
+      row.insertCell(-1);
+    }
+
+    for (let day = 1; day <= numDays; day++) {
+      const cell = row.insertCell(-1);
+      cell.textContent = day;
+
+      // Nếu đây là ngày hiện tại, tô màu vàng
+      if (month === currentMonth && day === today.getDate()) {
+        cell.classList.add("today");
+      }
+
+      // Di chuyển sang hàng mới nếu đã đến thứ 7
+      if (++dayOfWeek === 7) {
+        dayOfWeek = 0;
+        row = table.insertRow(-1);
+      }
+    }
+  }
+</script>
+
+</body>
+</html>
