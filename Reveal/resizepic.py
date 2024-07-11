@@ -1,6 +1,6 @@
 from PIL import Image
 
-def resize_image(input_path, output_path, size=(1000, 800)):
+def resize_image(input_path, output_path, size=(1000, 1000)):
     # Mở ảnh từ đường dẫn
     with Image.open(input_path) as img:
         # Đổi kích thước ảnh
